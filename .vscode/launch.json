@@ -10,15 +10,11 @@
             "name": "Mocha Tests",
             "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
             "args": [
-                "-u",
-                "tdd",
-                "--reporter",
-                "progress",
                 "${workspaceFolder}/buildScripts/testSetup.js",
-                "--timeout",
-                "999999",
+                "${workspaceFolder}/src/**/*.test.js",
                 "--colors",
-                "${workspaceFolder}/src/**/*.test.js"
+                "-r",
+                "jsdom-global/register"
             ],
             "internalConsoleOptions": "openOnSessionStart"
         },
