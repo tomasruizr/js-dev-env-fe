@@ -1,11 +1,18 @@
 # Front End Javascript development Environment
 
-## Elements
+## Dependencies
+
+### Http library
+
+* Fetch (with whatwg-fetch polyfill)
+
+## Development Enviroment Elements
 
 ### Sharing Work in progres:
 
 * localtunnel
-* Other options: (surge, ngrok, now)
+* surge
+* Other options: (ngrok, now)
 
 ### Development Web Server
 
@@ -18,7 +25,7 @@
 ### Transpiling
 
 * Babel
-* (TS)
+* babel-plugin-transform-es2015-modules-commonjs-simple: for noMangle
 
 ### Bundler
 
@@ -27,30 +34,34 @@
 ### Linting
 
 * ESLint
-* (TSLint)
 
-### Testing Framework
+### JS Error Logging:
+
+* TrackJS
+
+## Testing
+
+###Framework
 
 * Mocha
 
 ### Assertion Library
 
-* Chai (Assert)
+* Chai (expect)
 
 ### Helper Library
 
 * JSDOM: Simulates browser's DOM, run DOM-related tests without a browser.
-
 * Cheerio: jQuery selector for the server virtual DOM
+* fetch-mock:Mocks Fetch library
+* isomorphic-fetch: Provides Fetch functionality in node for testing
+
 
 ### CI
 
 * Travis (Linux Based)
 * Appveyor (Windows Based) 
 
-### JS Error Logging:
-
-* TrackJS
 
 ## Project Organization (look at demo folder)
 

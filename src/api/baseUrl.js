@@ -1,9 +1,16 @@
+import env from '../../config/env';
 export default function getBaseUrl() {
-    return getQueryStringParameterByName('useMockApi') ? 'http://localhost:3001/' : 'https://mysterious-dawn-16770.herokuapp.com/';
+    return getQueryStringParameterByName('useStaticData') ? '/' : env.api;
   }
-  
-function getQueryStringParameterByName(name, url) {
+
+//TODO: Update this function to use a library front end.
+/*
+for example in vue
+this.$route.query.test
+*/
+function getQueryStringParameterByName(name, url="") {
   if (!url) url = window.location.href;
+  // eslint-disable-next-line no-useless-escape
   name = name.replace(/[\[\]]/g, "\\$&");
   var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
       results = regex.exec(url);

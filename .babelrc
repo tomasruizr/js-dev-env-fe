@@ -1,5 +1,8 @@
 {
-  "presets": [
-    "latest"
+  "presets": ["env"],
+  "plugins": [
+    ["transform-es2015-modules-commonjs-simple", {
+       "noMangle": true
+    }]
   ]
 }
