@@ -5,8 +5,7 @@
 ### Sharing Work in progres:
 
 * localtunnel
-* surge
-* Other options: (ngrok, now)
+* Other options: (surge, ngrok, now)
 
 ### Development Web Server
 
@@ -58,3 +57,7 @@
 * Organize by feature instead of by file type.
 * Place the tests in the same place as the features.
 
+## Other useful libraries to consider
+
+* moment.js: Time management
+* numeral.js: Formats sumber strings.
