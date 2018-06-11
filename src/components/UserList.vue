@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import user from './models/user';
+import user from '../models/user';
 export default {
   name: 'user-list',
   data: function() {
