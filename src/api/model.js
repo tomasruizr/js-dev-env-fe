@@ -3,13 +3,13 @@
  * Exposes methods 'get', 'post', 'put', 'patch', 'delete' based on fetch.
  * In case you want to implement with some other library like axios, make the change here.
  */
-import 'whatwg-fetch'
-import getBaseUrl from './baseUrl'
-import { stringify } from 'querystring'
+import 'whatwg-fetch';
+import getBaseUrl from './baseUrl';
+import { stringify } from 'querystring';
 
-let model = {}
-model.headers = { "Content-Type": "application/json" }
-model.credentials = "same-origin"
+let model = {};
+model.headers = { 'Content-Type': 'application/json' };
+model.credentials = 'same-origin';
 model.baseUrl = getBaseUrl();
 model.url = '';
 [ 
@@ -20,46 +20,46 @@ model.url = '';
   'delete'
 ].forEach(method => {
   model[method] = function(data, options = {}){
-    let query = "";
+    let query = '';
     options = Object.assign({
       method: method.toUpperCase(),
       body: JSON.stringify(data),
       headers: this.headers,
       credentials: this.credentials
-    }, options)
+    }, options);
     if (method === 'get' || method === 'delete'){
       if (typeof data === 'object') {
         // let isObjectParam = Object.keys(data).some((key) => {
         //   return typeof data[key] === 'object'
         // })
         // query = isObjectParam ? stringify(data)+JSON.stringify(data) : stringify(data)
-        query = '?' + stringify(data)
+        query = '?' + stringify(data);
       } else {
         if (typeof data === 'string'){
-          data = (data).replace(/^\?/mig, "");
+          data = (data).replace(/^\?/mig, '');
           data = '?' + data;
         }
-        query = data || "";
+        query = data || '';
       }
-      delete options.body
+      delete options.body;
     }
     return fetch(this.baseUrl + this.url + query, options)
-    .then(onSuccess, onError)
-  }
-})
+    .then(onSuccess, onError);
+  };
+});
 
 function onSuccess(response) {
   if (response.status >= 200 && response.status < 300) {
-    return response.json()
+    return response.json();
   } else {
-    var error = new Error(response.statusText)
-    error.response = response
-    throw error
+    var error = new Error(response.statusText);
+    error.response = response;
+    throw error;
   }
 }
 
 function onError(error) {
-  throw error
+  throw error;
 }
 
-export default model
+export default model;

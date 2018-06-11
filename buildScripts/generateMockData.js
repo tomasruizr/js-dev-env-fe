@@ -13,10 +13,10 @@ import chalk from 'chalk';
 
 const json = JSON.stringify(jsf(schema));
 
-fs.writeFile("./buildScripts/db.json", json, function (err) {
+fs.writeFile('./buildScripts/db.json', json, function (err) {
   if (err) {
     return console.log(chalk.red(err));
   } else {
-    console.log(chalk.green("Mock data generated."));
+    console.log(chalk.green('Mock data generated.'));
   }
 });

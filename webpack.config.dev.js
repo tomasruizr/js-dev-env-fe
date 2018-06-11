@@ -4,6 +4,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 export default {
   mode: 'development',
   devtool: 'eval-source-map',
+  devtool: '#eval-source-map',
   entry: [
     path.resolve(__dirname, 'src/index')
   ],
@@ -27,3 +28,4 @@ export default {
     ]
   }
 }
+};

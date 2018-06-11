@@ -16,6 +16,7 @@
     "localtunnel": "lt --port 3000",
     "share": "npm-run-all --parallel open:src localtunnel",
     "test": "nyc mocha buildScripts/testSetup.js \"src/**/*.test.js\" -r jsdom-global/register",
+    "test": "nyc --reporter=lcov --reporter=text mocha buildScripts/testSetup.js \"src/**/*.test.js\" -r jsdom-global/register",
     "test:watch": "npm run test -- --watch",
     "generate-mock-data": "babel-node buildScripts/generateMockData",
     "prestart-mockapi": "npm run generate-mock-data",

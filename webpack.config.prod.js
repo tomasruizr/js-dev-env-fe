@@ -1,8 +1,8 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import WebpackMd5Hash from 'webpack-md5-hash';
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import devConf from "./webpack.config.dev";
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import devConf from './webpack.config.dev';
 
 export default {
   mode: 'production',
@@ -55,18 +55,5 @@ export default {
       trackJSToken: '43ad216f57d94259968435894490a5c7'
     }),
   ],
-  module: {
-    rules: [
-      {test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader']},
-      {
-        test:  /\.css$/,
-        loaders: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          // 'postcss-loader',
-          // 'sass-loader',
-        ],
-      }
-    ]
-  }
+  module: devConf.module
 };

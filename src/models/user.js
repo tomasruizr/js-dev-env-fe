@@ -1,4 +1,4 @@
-import model from '../api/model'
+import model from '../api/model';
 
 const user = Object.create(model);
 user.url ='user/';
