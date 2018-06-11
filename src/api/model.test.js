@@ -37,12 +37,15 @@ describe('model of some resource', function() {
             'patch',
             'delete'
         ].forEach(method => {
-            it('call the methods for the model', function(done) {
+            it(`call the method ${method} for the model`, function(done) {
                 model[method]().then(() => {
                     let call = fetchMock.lastCall('/resources/', method.toUpperCase());
                     expect(call[0]).to.eq('/resources/')
                     expect(call[1].method).to.eq(method.toUpperCase())
                     done();
+                })
+                .catch((err) => {
+                    done(err);
                 })
             });
         })
@@ -86,7 +89,7 @@ describe('model of some resource', function() {
         });
         
     });
-    describe('get with query', function() {
+    describe('delete and get with query', function() {
         before(() => {
             fetchMock.mock('/resources/', {}, {
                 query: {
@@ -95,17 +98,72 @@ describe('model of some resource', function() {
               });
         })
         after(fetchMock.restore);
-        it('call the get api with query parameters', function(done) {
-            model.get('?name=tomas').then(() => {
-                let call = fetchMock.lastCall('/resources/', 'GET');
-                expect(call[0]).to.eq('/resources/?name=tomas')
-                expect(call[1].body).to.not.exist
-                done()
-            }).catch((err) => {
-                done(err);
-            })
+        [ 
+            'get',
+            'delete'
+        ].forEach(method => {
+            it(`call the ${method} api with query params`, function(done) {
+                model[method]('?name=tomas').then(() => {
+                    let call = fetchMock.lastCall('/resources/', method.toUpperCase());
+                    expect(call[0]).to.eq('/resources/?name=tomas')
+                    expect(call[1].body).to.not.exist
+                    done()
+                }).catch((err) => {
+                    done(err);
+                })
+            });
         });
         
+    });
+    describe('delete and get with an object as query', function() {
+        before(() => {
+            fetchMock.mock('/resources/', {}, {
+                query: {
+                //   where: '%7B%22name%22%3A%7B%22contains%22%3A%22theodore%22%7D%7D'
+                  where: '{"name":{"contains":"theodore"}}'
+                }
+              });
+        })
+        after(fetchMock.restore);
+        [ 
+            'get',
+            'delete'
+        ].forEach(method => {
+            it(`call the ${method} api with query params`, function(done) {
+                model[method]({
+                        where: '{"name":{"contains":"theodore"}}'
+                    }).then(() => {
+                    let call = fetchMock.lastCall('/resources/', method.toUpperCase());
+                    expect(call[0]).to.eq('/resources/?where=%7B%22name%22%3A%7B%22contains%22%3A%22theodore%22%7D%7D')
+                    expect(call[1].body).to.not.exist
+                    done()
+                }).catch((err) => {
+                    done(err);
+                })
+            });
+        });
+        
+    });
+    describe('delete and get with id', function() {
+        before(() => {
+            fetchMock.mock('/resources/12', {});
+        })
+        after(fetchMock.restore);
+        [ 
+            'get',
+            'delete'
+        ].forEach(method => {
+            it(`call the ${method} api with id`, function(done) {
+                model[method](12).then(() => {
+                    let call = fetchMock.lastCall('/resources/12', method.toUpperCase());
+                    expect(call[0]).to.eq('/resources/12')
+                    expect(call[1].body).to.not.exist
+                    done()
+                }).catch((err) => {
+                    done(err);
+                })
+            });
+        });
     });
     
     

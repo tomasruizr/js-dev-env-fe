@@ -5,6 +5,7 @@
  */
 import 'whatwg-fetch'
 import getBaseUrl from './baseUrl'
+import { stringify } from 'querystring'
 
 let model = {}
 model.headers = { "Content-Type": "application/json" }
@@ -19,8 +20,7 @@ model.url = '';
   'delete'
 ].forEach(method => {
   model[method] = function(data, options = {}){
-    let query = typeof data === 'string' ? data : "";
-    data = method === 'get' || method === 'delete' ? options : data
+    let query = "";
     options = Object.assign({
       method: method.toUpperCase(),
       body: JSON.stringify(data),
@@ -28,6 +28,19 @@ model.url = '';
       credentials: this.credentials
     }, options)
     if (method === 'get' || method === 'delete'){
+      if (typeof data === 'object') {
+        // let isObjectParam = Object.keys(data).some((key) => {
+        //   return typeof data[key] === 'object'
+        // })
+        // query = isObjectParam ? stringify(data)+JSON.stringify(data) : stringify(data)
+        query = '?' + stringify(data)
+      } else {
+        if (typeof data === 'string'){
+          data = (data).replace(/^\?/mig, "");
+          data = '?' + data;
+        }
+        query = data || "";
+      }
       delete options.body
     }
     return fetch(this.baseUrl + this.url + query, options)

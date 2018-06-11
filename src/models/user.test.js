@@ -30,6 +30,9 @@ describe('user model', function() {
                 expect(call[1].method).to.eq(method.toUpperCase())
                 done();
             })
+            .catch((err) => {
+                done(err);
+            })
         });
     })
         

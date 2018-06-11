@@ -12,6 +12,8 @@
             "args": [
                 "${workspaceFolder}/buildScripts/testSetup.js",
                 "${workspaceFolder}/src/**/*.test.js",
+                "--timeout",
+                "999999",
                 "--colors",
                 "-r",
                 "jsdom-global/register"
