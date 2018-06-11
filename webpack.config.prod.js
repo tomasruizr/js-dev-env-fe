@@ -2,9 +2,10 @@ import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import WebpackMd5Hash from 'webpack-md5-hash';
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import devConf from "./webpack.config.dev";
 
 export default {
-  mode: 'development',
+  mode: 'production',
   devtool: 'source-map',
   entry: [ 
     path.resolve(__dirname, 'src/index')
