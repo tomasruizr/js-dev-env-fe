@@ -47,7 +47,7 @@
 
 ### Assertion Library
 
-* Chai (expect)
+* Chai (assert)
 
 ### Helper Library
 
