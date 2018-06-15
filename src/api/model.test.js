@@ -20,6 +20,20 @@ describe('model of some resource', function() {
         assert.deepEqual(model.headers, { 'Content-Type': 'application/json' });
         assert.equal(model.credentials, 'same-origin');
     });
+    describe.only('onSuccess errors', function() {
+        let onSuccess = global.moduleTests.modeljs.onSuccess;
+        let response = {
+            status: 400,
+            statusText: 'There was a problem'
+        };
+        try{
+            onSuccess(response);
+            assert(false, 'you should not be here, throw fail.');
+        } catch (e){
+            assert.equal(e.message, 'There was a problem');
+        }
+    });
+    
     describe('methods', function() {
         before(() => {
             fetchMock.catch({});

@@ -63,3 +63,15 @@ function onError(error) {
 }
 
 export default model;
+
+//*******************************************
+// Expose for testing
+//*******************************************
+let env = process.env.NODE_ENV;
+if (env === 'development') {
+  global.moduleTests = global.moduleTests || {};
+  global.moduleTests['modeljs'] = {
+    onSuccess,
+    onError
+  };
+}
