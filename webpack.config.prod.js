@@ -7,7 +7,7 @@ import devConf from './webpack.config.dev';
 export default {
   mode: 'production',
   devtool: 'source-map',
-  entry: [ 
+  entry: [
     path.resolve(__dirname, 'src/index')
   ],
   target: 'web',
@@ -18,11 +18,11 @@ export default {
   },
     // Use CommonsChunkPlugin to create a separate bundle
     // of Webpack runtime and vendor libraries so that they're cached separately.
-    optimization: {
-      splitChunks: {
-          chunks: 'all',
-      },
-      runtimeChunk: true,
+  optimization: {
+    splitChunks: {
+        chunks: 'all',
+    },
+    runtimeChunk: true,
   },
   plugins: [
     // Generate an external css file with a hash in the filename

@@ -12,7 +12,7 @@ model.headers = { 'Content-Type': 'application/json' };
 model.credentials = 'same-origin';
 model.baseUrl = getBaseUrl();
 model.url = '';
-[ 
+[
   'get',
   'post',
   'put',
@@ -67,8 +67,7 @@ export default model;
 //*******************************************
 // Expose for testing
 //*******************************************
-let env = process.env.NODE_ENV;
-if (env === 'development') {
+if (process.env.NODE_ENV === 'test') {
   global.moduleTests = global.moduleTests || {};
   global.moduleTests['modeljs'] = {
     onSuccess,
