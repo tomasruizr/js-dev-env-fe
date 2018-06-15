@@ -20,7 +20,8 @@ describe('model of some resource', function() {
         assert.deepEqual(model.headers, { 'Content-Type': 'application/json' });
         assert.equal(model.credentials, 'same-origin');
     });
-    describe.only('onSuccess errors', function() {
+    describe('onSuccess', function() {
+      it('should throw the error of the response if it reaches success function', function() {
         let onSuccess = global.moduleTests.modeljs.onSuccess;
         let response = {
             status: 400,
@@ -32,8 +33,10 @@ describe('model of some resource', function() {
         } catch (e){
             assert.equal(e.message, 'There was a problem');
         }
+      });
+
     });
-    
+
     describe('methods', function() {
         before(() => {
             fetchMock.catch({});
@@ -41,7 +44,7 @@ describe('model of some resource', function() {
             model.url = 'resources/';
         });
         after(fetchMock.restore);
-        [ 
+        [
             'get',
             'post',
             'put',
@@ -61,7 +64,7 @@ describe('model of some resource', function() {
             });
         });
         describe('get and delete', function() {
-            [ 
+            [
                 'get',
                 'delete'
             ].forEach(method => {
@@ -76,10 +79,10 @@ describe('model of some resource', function() {
                     });
                 });
             });
-            
+
         });
         describe('post, put, patch', function() {
-            [ 
+            [
                 'post',
                 'put',
                 'patch',
@@ -97,7 +100,7 @@ describe('model of some resource', function() {
                 });
             });
         });
-        
+
     });
     describe('delete and get with query', function() {
         before(() => {
@@ -108,7 +111,7 @@ describe('model of some resource', function() {
               });
         });
         after(fetchMock.restore);
-        [ 
+        [
             'get',
             'delete'
         ].forEach(method => {
@@ -123,7 +126,7 @@ describe('model of some resource', function() {
                 });
             });
         });
-        
+
     });
     describe('delete and get with an object as query', function() {
         before(() => {
@@ -135,7 +138,7 @@ describe('model of some resource', function() {
               });
         });
         after(fetchMock.restore);
-        [ 
+        [
             'get',
             'delete'
         ].forEach(method => {
@@ -152,14 +155,14 @@ describe('model of some resource', function() {
                 });
             });
         });
-        
+
     });
     describe('delete and get with id', function() {
         before(() => {
             fetchMock.mock('/resources/12', {});
         });
         after(fetchMock.restore);
-        [ 
+        [
             'get',
             'delete'
         ].forEach(method => {
@@ -175,6 +178,6 @@ describe('model of some resource', function() {
             });
         });
     });
-    
-    
+
+
 });
