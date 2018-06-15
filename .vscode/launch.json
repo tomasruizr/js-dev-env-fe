@@ -8,15 +8,20 @@
             "type": "node",
             "request": "launch",
             "name": "Mocha Tests",
-            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "program": "${workspaceFolder}/node_modules/mocha-webpack/bin/_mocha",
             "args": [
-                "${workspaceFolder}/buildScripts/testSetup.js",
+                "--webpack-config",
+                "webpack.config.test.js",
                 "${workspaceFolder}/src/**/*.test.js",
                 "--timeout",
                 "999999",
                 "--colors",
                 "-r",
-                "jsdom-global/register"
+                "${workspaceFolder}/buildScripts/testSetup.js",
+                "-r",
+                "jsdom-global/register",
+                "--interactive",
+                "false"
             ],
             "internalConsoleOptions": "openOnSessionStart"
         },
