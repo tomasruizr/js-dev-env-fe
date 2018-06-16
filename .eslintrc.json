@@ -1,13 +1,10 @@
 {
   "root": true,
   "extends": [
-    "eslint:recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:vue/essential"
+    "eslint:recommended"
   ],
   "parserOptions": {
-    "ecmaVersion": 7,
+    "ecmaVersion": 8,
     "sourceType": "module"
   },
   "env": {
@@ -20,6 +17,32 @@
     "no-console": 1,
     "semi": ["error", "always"],
     "quotes": ["error", "single", { "allowTemplateLiterals": true }],
-    "quote-props": ["error", "consistent-as-needed"]
+    "quote-props": ["error", "consistent-as-needed"],
+    "indent": ["error", 2],
+    "eqeqeq": [2, "allow-null"],
+    "prefer-template": "error",
+    
+    "no-multi-spaces": ["error", { "ignoreEOLComments": false }],
+    "space-in-parens": ["error", "always", { 
+      "exceptions": ["{}", "[]", "empty", "()"] 
+    }],
+    "object-curly-spacing": ["error", "always", {
+      "arraysInObjects": false,
+      "objectsInObjects": false
+    }],
+    "array-bracket-spacing": ["error", "always", {
+      "singleValue": false ,
+      "objectsInArrays": false,
+      "arraysInArrays": false
+    }],
+    "space-unary-ops": "error",
+    "block-spacing": "error",
+    "space-infix-ops": "error",
+    
+    "no-param-reassign":"off",
+    "prefer-object-spread" : "2",
+    "require-yield": "error",
+    "no-extra-boolean-cast":"off"
+
   }
 }

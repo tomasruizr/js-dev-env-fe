@@ -11,7 +11,7 @@
             "program": "${workspaceFolder}/node_modules/mocha-webpack/bin/_mocha",
             "args": [
                 "--webpack-config",
-                "webpack.config.test.js",
+                "webpack.config.debug.js",
                 "${workspaceFolder}/src/**/*.test.js",
                 "--timeout",
                 "999999",
