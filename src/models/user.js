@@ -1,5 +1,6 @@
 import model from '../api/model';
+import { createNew } from 'trutils';
 
-const user = Object.create(model);
-user.url ='user/';
+const user = createNew( model );
+user.url = 'user/';
 export default user;
