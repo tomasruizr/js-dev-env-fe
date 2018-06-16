@@ -9,17 +9,17 @@ import env from '../config/env';
 const port = env.distPort;
 const app = express();
 
-app.use(compression());
-app.use(express.static('dist'));
+app.use( compression());
+app.use( express.static( 'dist' ));
 
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, `../${env.distFolder}/${env.entry}`));
+app.get( '/', function( req, res ) {
+  res.sendFile( path.join( __dirname, `../${env.distFolder}/${env.entry}` ));
 });
 
-app.listen(port, function(err) {
-  if (err) {
-    console.log(err);
+app.listen( port, function( err ) {
+  if ( err ) {
+    console.log( err );
   } else {
-    open('http://localhost:' + port);
+    open( `http://localhost:${ port}` );
   }
 });
