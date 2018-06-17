@@ -15,8 +15,7 @@
     "security-check": "nsp check",
     "localtunnel": "lt --port 3000",
     "share": "npm-run-all --parallel open:src localtunnel",
-    "test": "nyc mocha buildScripts/testSetup.js \"src/**/*.test.js\" -r jsdom-global/register",
-    "test": "nyc --reporter=lcov --reporter=text mocha buildScripts/testSetup.js \"src/**/*.test.js\" -r jsdom-global/register",
+    "test": "nyc --reporter=lcov --reporter=text mocha-webpack --reporter spec --webpack-config webpack.config.test.js  \"src/**/*.test.js\" -r buildScripts/testSetup.js -r jsdom-global/register --interactive false",
     "test:watch": "npm run test -- --watch",
     "generate-mock-data": "babel-node buildScripts/generateMockData",
     "prestart-mockapi": "npm run generate-mock-data",
@@ -29,6 +28,7 @@
     "deploy": "surge ./dist"
   },
   "dependencies": {
+    "trutils": "github:tomasruizr/trutils",
     "whatwg-fetch": "2.0.4"
   },
   "devDependencies": {
@@ -67,7 +67,6 @@
     "surge": "^0.20.1",
     "webpack": "4.12.0",
     "webpack-dev-middleware": "3.1.3",
-    "webpack-hot-middleware": "2.22.2",
     "webpack-md5-hash": "0.0.6"
   },
   "nyc": {
