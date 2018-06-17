@@ -70,6 +70,7 @@
     "open": "0.0.5",
     "rimraf": "2.6.2",
     "sass-loader": "^7.0.3",
+    "sinon": "^6.0.0",
     "style-loader": "0.21.0",
     "surge": "^0.20.1",
     "vue-loader": "^15.2.4",

@@ -9,7 +9,7 @@
         <th>Last Name</th>
         <th>Email</th>
       </thead>
-      <tbody id="user">
+      <tbody id="users">
         <tr v-for="(user, index) in users" :key= "user.id">
           <td><a href="#" @click="deleteUser(user.id, index)" class="deleteUser">Delete</a></td>
           <td>{{user.id}}</td>
@@ -32,15 +32,18 @@ export default {
     }
   },
   mounted: function() {
-    let self = this;
-    user.get().then(function(result) {
-      self.users = result;
-    });
+    this.getUsers();  
   },
   methods: {
     deleteUser(id, index){
       user.delete(id);
       this.users.splice(index,1);      
+    },
+    getUsers(){
+      let self = this;
+      user.get().then(function(result) {
+        self.users = result;
+      });  
     }
   } 
     
