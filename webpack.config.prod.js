@@ -8,19 +8,19 @@ export default {
   mode: 'production',
   devtool: 'source-map',
   entry: [
-    path.resolve(__dirname, 'src/index')
+    path.resolve( __dirname, 'src/index' )
   ],
   target: 'web',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve( __dirname, 'dist' ),
     publicPath: '/',
     filename: '[name].[chunkhash].js'
   },
-    // Use CommonsChunkPlugin to create a separate bundle
-    // of Webpack runtime and vendor libraries so that they're cached separately.
+  // Use CommonsChunkPlugin to create a separate bundle
+  // of Webpack runtime and vendor libraries so that they're cached separately.
   optimization: {
     splitChunks: {
-        chunks: 'all',
+      chunks: 'all',
     },
     runtimeChunk: true,
   },

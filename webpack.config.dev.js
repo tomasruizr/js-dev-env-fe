@@ -3,14 +3,13 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
   mode: 'development',
-  devtool: 'eval-source-map',
   devtool: '#eval-source-map',
   entry: [
-    path.resolve(__dirname, 'src/index')
+    path.resolve( __dirname, 'src/index' )
   ],
   target: 'web',
   output: {
-    path: path.resolve(__dirname, 'src'),
+    path: path.resolve( __dirname, 'src' ),
     publicPath: '/',
     filename: 'bundle.js'
   },
@@ -23,9 +22,8 @@ export default {
   ],
   module: {
     rules: [
-      {test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader']},
-      {test: /\.css$/, loaders: ['style-loader','css-loader']}
+      { test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader']},
+      { test: /\.css$/, loaders: [ 'style-loader','css-loader' ]}
     ]
   }
-}
 };
