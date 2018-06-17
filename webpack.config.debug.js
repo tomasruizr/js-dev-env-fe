@@ -1,4 +1,3 @@
-import path from 'path';
 import dev from './webpack.config.dev';
 // exclude NPM deps from test bundle
 dev.externals = [require( 'webpack-node-externals' )()];
