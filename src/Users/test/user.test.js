@@ -1,5 +1,5 @@
 import { assert } from 'chai';
-import user from './user';
+import user from '../userModel';
 import fetchMock from 'fetch-mock';
 
 describe( 'user model', function() {

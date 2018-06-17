@@ -5,8 +5,8 @@ import sinon from 'sinon';
 import cheerio from 'cheerio';
 
 fetchMock.getOnce( '*', []);
-import UserList from './UserList.vue';
-import user from '../models/user';
+import UserList from '../UserList.vue';
+import user from '../userModel';
 let get, del;
 describe( 'UserList.vue', function() {
   const wrapper = shallowMount( UserList );
