@@ -1,6 +1,6 @@
 module.exports = {
-  devPort: 3000,
-  distPort: 3000,
+  devPort: 4000,
+  distPort: 4000,
   entry: 'index.html',
   srcFolder: 'src',
   distFolder: 'dist',

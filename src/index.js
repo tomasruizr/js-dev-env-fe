@@ -1,6 +1,6 @@
 // import './index.css';
 import Vue from 'vue';
-import Main from './components/MainApp.vue';
+import Main from './MainApp.vue';
 
 new Vue({
   el: '#app',
