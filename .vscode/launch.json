@@ -10,6 +10,7 @@
             "name": "Mocha Tests",
             "program": "${workspaceFolder}/node_modules/mocha-webpack/bin/_mocha",
             "skipFiles": [
+                "<node_internals>/**",
                 "bundle.js"
             ],
             "args": [

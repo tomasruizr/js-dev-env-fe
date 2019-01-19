@@ -4,6 +4,7 @@ module.exports = {
   entry: 'index.html',
   srcFolder: 'src',
   distFolder: 'dist',
-  api: 'http://localhost:3001/',
+  restServer: 'http://localhost:3001/',
+  socketServer: 'http://localhost:3001/',
   staticData: '/',
 };

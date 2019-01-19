@@ -10,18 +10,18 @@ describe( 'baseUrl', function() {
     base = getBaseUrl( 'https://example.org/?asdfds&useStaticData=true' );
     assert.equal( env.staticData, base );
   });
-  it( 'returns env.api if useStatic not passed', function() {
+  it( 'returns env.restServer if useStatic not passed', function() {
     let base = getBaseUrl( 'https://example.org/' );
-    assert.equal( env.api, base );
+    assert.equal( env.restServer, base );
   });
-  it( 'returns env.api if passed as false', function() {
+  it( 'returns env.restServer if passed as false', function() {
     let base = getBaseUrl( 'https://example.org/?useStaticData=false' );
-    assert.equal( env.api, base );
+    assert.equal( env.restServer, base );
   });
-  it( 'returns env.api if passed without value', function() {
+  it( 'returns env.restServer if passed without value', function() {
     let base = getBaseUrl( 'https://example.org/?useStaticData' );
-    assert.equal( env.api, base );
+    assert.equal( env.restServer, base );
   });
-  
-  
+
+
 });

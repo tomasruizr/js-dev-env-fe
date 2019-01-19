@@ -1,6 +1,6 @@
 import env from '../../config/env';
 export default function getBaseUrl( url = '' ) {
-  return getQueryStringParameterByName( 'useStaticData', url ) === 'true' ? env.staticData : env.api;
+  return getQueryStringParameterByName( 'useStaticData', url ) === 'true' ? env.staticData : env.restServer;
 }
 
 //TODO: Update this function to use a library front end.
@@ -19,4 +19,3 @@ function getQueryStringParameterByName( name, url = '' ) {
   if ( !results[2]) return '';
   return decodeURIComponent( results[2].replace( /\+/g, ' ' ));
 }
-  

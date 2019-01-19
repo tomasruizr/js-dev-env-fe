@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 import Model from './model';
 import fetchMock from 'fetch-mock';
-import { createNew } from 'trutils';
+import { createNew } from '@tomasruizr/trutils';
 
 let model;
 describe( 'model of some resource', function() {
