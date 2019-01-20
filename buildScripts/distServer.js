@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 import open from 'opn';
 import compression from 'compression';
-import env from '../config/env';
+import env from '..//config';
 
 /* eslint-disable no-console */
 

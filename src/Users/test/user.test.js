@@ -6,7 +6,7 @@ describe( 'user model', function() {
   before(() => {
     fetchMock.mock( '*', {});
     // fetchMock.catch({});
-    user.baseUrl = '/';
+    user.apiServer = '/';
   });
   after( fetchMock.restore );
   it( 'contains the http methods as functions in the model', function() {

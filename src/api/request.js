@@ -1,18 +1,39 @@
 import socketClient from 'socket.io-client';
-const request = {};
 let socket, io;
+
+const request = function ( uri, options = {}) {
+  if ( !uri || uri === '' ) throw new Error( 'uri must exist for request' );
+  const noBase = options.urlPassThrough;
+  delete options.urlPassThrough;
+  options = {
+    method: 'get',
+    isSocket: false
+    // headers: {},
+    // credentials: {},
+    ,
+    ...options
+  };
+  if ( options.isSocket && !options.noSocket && !noBase ) {
+    const params = [`VR:${options.method}:${uri}`];
+    if ( options.body ) params.push( options.body );
+    return new Promise( resolve => socket.emit.call( socket, ...params, resolve ));
+  } else {
+    uri = noBase ? uri : `${request.options.apiServer}${uri}`;
+    return fetch( uri, options );
+  }
+};
 
 request.init = function ( options_ = {}) {
   io = options_.io || socketClient;
   request.options = options_;
-  if ( !options_.baseUrl ) throw new Error( 'No baseUrl specified for the request Library' );
+  if ( !options_.apiServer ) throw new Error( 'No apiServer specified for the request Library' );
   if ( options_.noSocket !== true )
-    request.socketConnect( options_.baseUrl, options_.nsp );
+    request.socketConnect( options_.apiServer, options_.nsp );
 };
 
-request.socketConnect = function ( baseUrl, nsp ) {
+request.socketConnect = function ( apiServer, nsp ) {
   nsp = nsp ? `/${nsp}` : '';
-  socket = io( `${baseUrl}${nsp}`, {
+  socket = io( `${apiServer}${nsp}`, {
     transports: [ 'websocket', 'polling' ]
   });
   socket.once( 'connect', request.exposeSocketMethods );
@@ -31,34 +52,5 @@ request.exposeSocketMethods = function ( socket ) {
     };
   });
 };
-
-[
-  'get',
-  'post',
-  'put',
-  'patch',
-  'delete'
-].forEach( method => {
-  request[method] = function ( uri, options = {}) {
-    const noBase = options.urlPassThrough;
-    delete options.urlPassThrough;
-    options = {
-      method: method,
-      isSocket: false
-      // headers: {},
-      // credentials: {},
-      ,
-      ...options
-    };
-    if ( options.isSocket && !options.noSocket && !noBase ) {
-      const params = [`VR:${method}:${uri}`];
-      if ( options.body ) params.push( options.body );
-      return new Promise( resolve => socket.emit.call( socket, ...params, resolve ));
-    } else {
-      uri = noBase ? uri : `${request.options.baseUrl}${uri}`;
-      return fetch( uri, options );
-    }
-  };
-});
 
 export default request;

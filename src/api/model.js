@@ -4,13 +4,13 @@
  * In case you want to implement with some other library like axios, make the change here.
  */
 import 'whatwg-fetch';
-import getBaseUrl from './baseUrl';
+import { getApiServer } from './urlManager';
 import { stringify } from 'querystring';
 
 let model = function( options = {}){
   this.headers = options.headers || { 'Content-Type': 'application/json' };
-  this.credentials = options.credentials || 'same-origin';
-  this.baseUrl = options.baseUrl || getBaseUrl();
+  this.credentials = options.credentials || 'include';
+  this.apiServer = options.apiServer || getApiServer();
   this.url = options.url || '';
 };
 [
@@ -20,31 +20,29 @@ let model = function( options = {}){
   'patch',
   'delete'
 ].forEach( method => {
-  model.prototype[method] = function( data, options = {}){
+  model.prototype[method] = function( data, options_ = {}){
     let query = '';
-    options = Object.assign({
-      method: method.toUpperCase(),
-      body: JSON.stringify( data ),
+    const options = Object.assign({
       headers: this.headers,
       credentials: this.credentials
-    }, options );
-    if ( method === 'get' || method === 'delete' ){
+    }, options_, { method: method.toUpperCase() });
+    if ([ 'get', 'delete' ].includes( method ) && data ){
       if ( typeof data === 'object' ) {
-        // let isObjectParam = Object.keys(data).some((key) => {
-        //   return typeof data[key] === 'object'
-        // })
-        // query = isObjectParam ? stringify(data)+JSON.stringify(data) : stringify(data)
+        if ( !data.filter ){
+          data = { filter : { ...data }};
+        }
+        if ( typeof data.filter === 'object' ) {
+          data.filter = JSON.stringify( data.filter );
+        }
         query = `?${ stringify( data )}`;
       } else {
-        if ( typeof data === 'string' ){
-          data = ( data ).replace( /^\?/mig, '' );
-          data = `?${ data}`;
-        }
-        query = data || '';
+        data = ( `${data}` ).replace( /^\?/mig, '' );
+        query = `?${data}`;
       }
-      delete options.body;
+    } else {
+      options.body = JSON.stringify( data );
     }
-    return fetch( this.baseUrl + this.url + query, options )
+    return fetch( this.apiServer + this.url + query, options )
       .then( onSuccess, onError );
   };
 });
@@ -68,6 +66,7 @@ export default model;
 //*******************************************
 // Expose for testing
 //*******************************************
+/* istanbul ignore next */
 if ( process.env.NODE_ENV === 'test' ) {
   global.moduleTests = global.moduleTests || {};
   global.moduleTests['modeljs'] = {
