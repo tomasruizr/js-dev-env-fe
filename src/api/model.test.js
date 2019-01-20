@@ -173,50 +173,9 @@ describe( 'model of some resource', function() {
     });
 
   });
-  describe( 'delete and get with query', function() {
-    before(() => {
-      fetchMock.mock( '/resources', {}, {
-        query: {
-          name: 'tomas'
-        }
-      });
-    });
-    after( fetchMock.restore );
-    [
-      'get',
-      'delete'
-    ].forEach( method => {
-      it( `call the ${method} api with query params`, function( done ) {
-        model[method]( '?name=tomas' ).then(() => {
-          let call = fetchMock.lastCall( '/resources', method.toUpperCase());
-          assert.equal( call[0], '/resources?name=tomas' );
-          assert.notExists( call[1].body );
-          done();
-        }).catch(( err ) => {
-          done( err );
-        });
-      });
-    });
-    [
-      'get',
-      'delete'
-    ].forEach( method => {
-      it( `call the ${method} api with query params`, function( done ) {
-        model[method]( 'name=tomas' ).then(() => {
-          let call = fetchMock.lastCall( '/resources', method.toUpperCase());
-          assert.equal( call[0], '/resources?name=tomas' );
-          assert.notExists( call[1].body );
-          done();
-        }).catch(( err ) => {
-          done( err );
-        });
-      });
-    });
-
-
-  });
   describe( 'delete and get with an object as query', function() {
     before(() => {
+      fetchMock.catch({});
       fetchMock.mock( '/resources', {}, {
         query: {
           //   filter: '%7B%22name%22%3A%7B%22contains%22%3A%22theodore%22%7D%7D'
@@ -242,12 +201,11 @@ describe( 'model of some resource', function() {
         });
       });
     });
-    after( fetchMock.restore );
     [
       'get',
       'delete'
     ].forEach( method => {
-      it( `call the ${method} api with query params as stringify object`, function( done ) {
+      it( `call the ${method} api with query params as object with no filter prop`, function( done ) {
         model[method]({ name:{ contains:'theodore' }})
           .then(() => {
             let call = fetchMock.lastCall( '/resources', method.toUpperCase());
@@ -263,7 +221,7 @@ describe( 'model of some resource', function() {
       'get',
       'delete'
     ].forEach( method => {
-      it( `call the ${method} api with query params as object`, function( done ) {
+      it( `call the ${method} api with query params as object with filter prop`, function( done ) {
         model[method]({
           filter: { name:{ contains:'theodore' }}
         }).then(() => {
@@ -274,6 +232,50 @@ describe( 'model of some resource', function() {
         }).catch(( err ) => {
           done( err );
         });
+      });
+    });
+    [
+      'get',
+      'delete'
+    ].forEach( method => {
+      it( `call the ${method} api with query params as something not object will throw`, function() {
+        try{
+          model[method]( 1 );
+          assert( false, 'integer' );
+        }catch( e ){
+          assert.equal( e.message, 'the query parameters should be an object' );
+        }
+        try{
+          model[method]( 'asdf' );
+          assert( false, 'string' );
+        }catch( e ){
+          assert.equal( e.message, 'the query parameters should be an object' );
+        }
+        try{
+          model[method]( new Date());
+          assert( false, 'date' );
+        }catch( e ){
+          assert.equal( e.message, 'the query parameters should be an object' );
+        }
+        try{
+          model[method]( 1.23 );
+          assert( false, 'double' );
+        }catch( e ){
+          assert.equal( e.message, 'the query parameters should be an object' );
+        }
+        try{
+          model[method](['name']);
+          assert( false, 'array' );
+        }catch( e ){
+          assert.equal( e.message, 'the query parameters should be an object' );
+        }
+        try{
+          model[method]( true );
+          assert( false, 'boolean' );
+        }catch( e ){
+          assert.equal( e.message, 'the query parameters should be an object' );
+        }
+
       });
     });
   });

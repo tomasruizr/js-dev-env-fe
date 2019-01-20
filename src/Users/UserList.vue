@@ -23,8 +23,10 @@
 </template>
 
 <script>
-import user from './userModel';
+// import user from './userModel';
+let user;
 export default {
+  inject: ['model'],
   name: 'user-list',
   data: function() {
     return {
@@ -32,21 +34,22 @@ export default {
     }
   },
   mounted: function() {
-    this.getUsers();  
+    user = new this.model('/user');
+    this.getUsers();
   },
   methods: {
     deleteUser(id, index){
       user.delete(id);
-      this.users.splice(index,1);      
+      this.users.splice(index,1);
     },
     getUsers(){
       let self = this;
       user.get().then(function(result) {
         self.users = result;
-      });  
+      });
     }
-  } 
-    
+  }
+
 }
 </script>
 

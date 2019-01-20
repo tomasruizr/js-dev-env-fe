@@ -1,4 +1,4 @@
-import socketClient from 'socket.io-client';
+import { getApiServer } from './urlManager';
 let socket, io;
 
 const request = function ( uri, options = {}) {
@@ -18,17 +18,18 @@ const request = function ( uri, options = {}) {
     if ( options.body ) params.push( options.body );
     return new Promise( resolve => socket.emit.call( socket, ...params, resolve ));
   } else {
-    uri = noBase ? uri : `${request.options.apiServer}${uri}`;
+    uri = noBase ? uri : `${getApiServer()}${uri}`;
     return fetch( uri, options );
   }
 };
 
-request.init = function ( options_ = {}) {
-  io = options_.io || socketClient;
-  request.options = options_;
-  if ( !options_.apiServer ) throw new Error( 'No apiServer specified for the request Library' );
-  if ( options_.noSocket !== true )
-    request.socketConnect( options_.apiServer, options_.nsp );
+request.init = function ( options = {}) {
+  // if ( !options.apiServer ) throw new Error( 'No apiServer specified for the request Library' );
+  if ( options.noSocket !== true ){
+    if ( !options.io ) throw new Error( 'No websocket client (socket.io-client) specified for the request Library' );
+    io = options.io;
+    request.socketConnect( options.apiServer, options.nsp );
+  }
 };
 
 request.socketConnect = function ( apiServer, nsp ) {

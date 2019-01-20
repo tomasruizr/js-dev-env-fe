@@ -4,14 +4,18 @@
  * In case you want to implement with some other library like axios, make the change here.
  */
 import 'whatwg-fetch';
-import { getApiServer } from './urlManager';
 import { stringify } from 'querystring';
+let request;
 
 let model = function( options = {}){
-  this.headers = options.headers || { 'Content-Type': 'application/json' };
-  this.credentials = options.credentials || 'include';
-  this.apiServer = options.apiServer || getApiServer();
-  this.url = options.url || '';
+  this.headers = { 'Content-Type': 'application/json' };
+  this.credentials = 'include';
+  this.url = '';
+  if ( typeof options === 'string' ){
+    this.url = options;
+  } else if ( typeof options === 'object' ){
+    Object.assign( this, options );
+  } else throw new Error( 'Unrecognized params for model' );
 };
 [
   'get',
@@ -27,25 +31,29 @@ let model = function( options = {}){
       credentials: this.credentials
     }, options_, { method: method.toUpperCase() });
     if ([ 'get', 'delete' ].includes( method ) && data ){
-      if ( typeof data === 'object' ) {
-        if ( !data.filter ){
-          data = { filter : { ...data }};
-        }
-        if ( typeof data.filter === 'object' ) {
-          data.filter = JSON.stringify( data.filter );
-        }
-        query = `?${ stringify( data )}`;
-      } else {
-        data = ( `${data}` ).replace( /^\?/mig, '' );
-        query = `?${data}`;
+      // istanbul ignore next
+      if ( typeof data !== 'object' || data instanceof Date || Array.isArray( data )) {
+        throw new Error ( 'the query parameters should be an object' );
       }
+      if ( !data.filter ){
+        data = { filter : { ...data }};
+      }
+      if ( typeof data.filter === 'object' ) {
+        data.filter = JSON.stringify( data.filter );
+      }
+      query = `?${ stringify( data )}`;
     } else {
       options.body = JSON.stringify( data );
     }
-    return fetch( this.apiServer + this.url + query, options )
+    // return fetch( this.url + query, options )
+    return request( this.url + query, options )
       .then( onSuccess, onError );
   };
 });
+
+model.init = function ( params ) {
+  request = params.request;
+};
 
 function onSuccess( response ) {
   if ( response.status >= 200 && response.status < 300 ) {
